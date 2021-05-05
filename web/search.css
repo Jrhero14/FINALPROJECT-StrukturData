@@ -1,3 +1,5 @@
+@import "animation.css";
+
 body {
   background-image: linear-gradient(to bottom right, #3494E6, #EC6EAD);
   background-size: 180% 180%;
@@ -6,24 +8,9 @@ body {
   animation: AnimationName 10s ease infinite;
 }
 
-@-webkit-keyframes AnimationName {
-   0%{background-position:0% 50%}
-   50%{background-position:100% 50%}
-   100%{background-position:0% 50%}
-}
-@-moz-keyframes AnimationName {
-   0%{background-position:0% 50%}
-   50%{background-position:100% 50%}
-   100%{background-position:0% 50%}
-}
-@keyframes AnimationName {
-   0%{background-position:0% 50%}
-   50%{background-position:100% 50%}
-   100%{background-position:0% 50%}
-}
-
 .all-container{
   margin-left: 215px;
+  height: 600px;
 }
 
 .beside{
@@ -113,6 +100,10 @@ input[type=text]:focus {
   font-family: Montserrat;
   color: white;
   vertical-align: top;
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.5s linear;
 }
 
 .search-output-container-left{
@@ -142,4 +133,15 @@ input[type=text]:focus {
   font-weight: normal;
   font-size: 15px;
   margin: 0;
+}
+
+.loader-container{
+  margin-left: 230px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.5s linear;
+}
+
+.loader-container img{
+  height: 200px;
 }

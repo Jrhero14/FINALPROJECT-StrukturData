@@ -25,7 +25,48 @@ function add_words(){
   overlay.style.visibility = 'visible';
   overlay.style.opacity = 1
   setTimeout(function(){
-    overlay.style.visibility = 'hidden';
     overlay.style.opacity = 0
+    overlay.style.visibility = 'hidden';
+  }, 2000)
+}
+
+function edit_words(){
+  var kata = document.getElementById("kata").value
+  var pilihan = document.getElementById("pilihan").value
+  var deskripsi = document.getElementById("deskripsi").value
+  if(kata && pilihan != 0 && deskripsi){
+    var output = document.getElementById("output")
+    var loading = document.getElementById("loader")
+    output.style.visibility = 'hidden'
+    loading.style.visibility = 'visible'
+    output.style.opacity = 0
+    loading.style.opacity = 1
+    setTimeout(function(){
+      output.style.visibility = 'visible'
+      loading.style.visibility = 'hidden';
+      output.style.opacity = 1
+      loading.style.opacity = 0
   }, 3000)
+    console.log(data)
+  }
+}
+
+function preview(){
+  var kata = document.getElementById("kata").value
+  var pilihan = document.getElementById("pilihan").value
+  if(kata && pilihan != 0){
+    var output = document.getElementById("output")
+    var loading = document.getElementById("loader")
+    output.style.visibility = 'hidden'
+    loading.style.visibility = 'visible'
+    output.style.opacity = 0
+    loading.style.opacity = 1
+    setTimeout(function(){
+      output.style.visibility = 'visible'
+      loading.style.visibility = 'hidden';
+      output.style.opacity = 1
+      loading.style.opacity = 0
+  }, 3000)
+    console.log(data)
+  }
 }

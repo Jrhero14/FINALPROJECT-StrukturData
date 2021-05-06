@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>KamusGaul</title>
+  <link rel="stylesheet" href="add.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="pictures\icon.png" type="image/x-icon">
+  <script type="text/javascript" src="frontend.js"></script>
+</head>
+<body>
+  <div class="all-container">
+    <div class="menu-container">
+      <p class="beside">KAMUSGAUL</p>
+      <div class="submenu-container beside">
+      <ul class="beside">
+        <li><a href="home.html">Home</a></li>
+        <li><a href="search.html">Search</a></li>
+        <li class="page-now" style="opacity: 100%; font-weight: bolder">Add</li>
+        <li><a href="edit.html">Edit</a></li>
+      </ul>
+      </div>
+      </div>
+      <div class="input-menu">
+        <div class="title">
+          <p>Tambah Kata Gaul Baru</p>
+        </div>
+        <div class="input-div overlayed">
+          <input type="text" placeholder="Tuliskan kata-kata gaul disini!" id="kata">
+          <input type="text" placeholder="Tuliskan definisi kata-kata gaul disini!" id="definisi">
+          <input type="text" placeholder="Tuliskan contoh pengunaannya disini!" id="contoh">
+          <button type="button" name="button" onclick="add_words()">Submit!</button>
+        </div>
+        <div class="overlay-screen" id="overlay">
+          <p>Data Berhasil <br>Dikirim!</p>
+        </div>
+      </div>
+      </div>
+</body>
+</html>

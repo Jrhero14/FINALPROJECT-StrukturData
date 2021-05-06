@@ -16,3 +16,16 @@ function search_words(){
     console.log(data)
   }
 }
+
+function add_words(){
+  var kata = document.getElementById("kata").value
+  var definisi = document.getElementById("definisi").value
+  var contoh = document.getElementById("contoh").value
+  var overlay = document.getElementById("overlay")
+  overlay.style.visibility = 'visible';
+  overlay.style.opacity = 1
+  setTimeout(function(){
+    overlay.style.visibility = 'hidden';
+    overlay.style.opacity = 0
+  }, 3000)
+}

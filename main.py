@@ -1,6 +1,8 @@
 import pandas as pd
+import eel
 
 df = pd.read_csv("database.csv")
+eel.init('web')
 
 #FUNGSI-FUNGSI SISTEM BEGIN
 def hashFunction(word):
@@ -49,11 +51,8 @@ def overwrite():
 
 
 # FUNGSI-FUNGSI OPERASI BEGIN
-
-def tambah():
-    kata = input("Masukan kata Gaul:") # Variabel input tambah kata
-    definisi = input("Definisi kata tersebut:") # Variabel input definisi kata
-    contoh = input("Contoh kata tersebut:") # Variabel input contoh kata
+@eel.expose
+def tambah(kata, definisi, contoh):
 
     if (df.isnull().loc[hashFunction(kata)][0] == False): # Apabila dalam database entry tersebut sudah ada yg menempati
         print("Terjadi Collision, Linear Collision sedang dilakukan...")
@@ -61,15 +60,16 @@ def tambah():
         df.loc[newIndex] = [kata, definisi, contoh]
         overwrite()
         print("Linear Collision sukses dilakukan!!")
+        return 1
 
     else:  # Apabila dalam database entry tersebut kosong
         df.loc[hashFunction(kata)] = [kata, definisi, contoh]
         overwrite()
         print("Berhasil ditambahkan\n")
+        return 0
 
-
-def cari():
-    word = input("Cari kata:")
+@eel.expose
+def cari(word):
     if (df.loc[hashFunction(word)][0] == word): # Apabila data ditemukan
         print("|::::: Kata ditemukan :::::|")
         print("Kata: ", df.loc[hashFunction(word)][0])
@@ -101,8 +101,9 @@ def cari():
 
     else: # Apabila data tidak ditemukan
         print(word, "Tidak ditemukan :[")
+        sleep(30)
 
-
+@eel.expose
 def edit():
     word = input("Cari kata yang akan diedit:")
     pilih = None
@@ -207,24 +208,4 @@ def edit():
     else: # Apabila data tidak ditemukan untuk diedit
         print(word, "Tidak ditemukan :[")
 
-# FUNGSI-FUNGSI OPERASI END
-
-while True:
-    print("|::: KAMUS GAOLLL :::|")
-    print("1.Tambah\n2.Cari Kata\n3.Edit\n4.Keluar Program")
-    menu_Utama = int(input("Pilih:"))
-
-    if(menu_Utama == 1):
-        tambah()
-        print("\n")
-    elif(menu_Utama == 2):
-        cari()
-        print("\n")
-    elif(menu_Utama == 3):
-        edit()
-        print("\n")
-    elif(menu_Utama == 4):
-        exit()
-    else:
-        print("Tidak ada dalam menu, ulangi!!")
-    input("Enter untuk kembali ke menu...")
+eel.start('home.html', size=(1280,800))

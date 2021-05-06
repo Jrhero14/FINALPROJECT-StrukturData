@@ -70,3 +70,7 @@ function preview(){
     console.log(data)
   }
 }
+
+window.addEventListener('contextmenu', function (e) {
+  e.preventDefault();
+}, false);

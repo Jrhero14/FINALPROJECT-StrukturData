@@ -1,6 +1,6 @@
 async function search_words(){
-  var data = document.getElementById("input").value
-  if(data){
+  var word = document.getElementById("input").value
+  if(word){
     var output = document.getElementById("output")
     var loading = document.getElementById("loader")
     output.style.visibility = 'hidden'
@@ -10,9 +10,9 @@ async function search_words(){
     var kata = document.getElementById("word")
     var definisi = document.getElementById("definition")
     var contoh = document.getElementById("example")
-    let hasil = await eel.cari(data)
+    let hasil = await eel.cari(word)
     console.log(kata)
-    if(1){
+    if(hasil == "nyaa"){
       kata.innerHTML = "Hasil tidak ditemukan"
       definisi.innerHTML = "Hasil tidak ditemukan"
       contoh.innerHTML = "Hasil tidak ditemukan"
@@ -27,8 +27,7 @@ async function search_words(){
       loading.style.visibility = 'hidden';
       output.style.opacity = 1
       loading.style.opacity = 0
-  }, 3000)
-    console.log(data)
+  }, 2000)
     console.log(hasil)
   }
 }

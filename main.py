@@ -101,7 +101,7 @@ def cari(word):
 
     else: # Apabila data tidak ditemukan
         print(word, "Tidak ditemukan :[")
-        return word
+        return "nyaa"
 
 @eel.expose
 def edit():

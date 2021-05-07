@@ -1,4 +1,4 @@
-function search_words(){
+async function search_words(){
   var data = document.getElementById("input").value
   if(data){
     var output = document.getElementById("output")
@@ -7,6 +7,21 @@ function search_words(){
     loading.style.visibility = 'visible'
     output.style.opacity = 0
     loading.style.opacity = 1
+    var kata = document.getElementById("word")
+    var definisi = document.getElementById("definition")
+    var contoh = document.getElementById("example")
+    let hasil = await eel.cari(data)
+    console.log(kata)
+    if(1){
+      kata.innerHTML = "Hasil tidak ditemukan"
+      definisi.innerHTML = "Hasil tidak ditemukan"
+      contoh.innerHTML = "Hasil tidak ditemukan"
+    }
+    else{
+      kata.innerHTML = hasil[0]
+      definisi.innerHTML = hasil[1]
+      contoh.innerHTML = hasil[2]
+    }
     setTimeout(function(){
       output.style.visibility = 'visible'
       loading.style.visibility = 'hidden';
@@ -14,6 +29,7 @@ function search_words(){
       loading.style.opacity = 0
   }, 3000)
     console.log(data)
+    console.log(hasil)
   }
 }
 
@@ -71,6 +87,9 @@ function preview(){
   }
 }
 
+/*
 window.addEventListener('contextmenu', function (e) {
   e.preventDefault();
 }, false);
+
+*/

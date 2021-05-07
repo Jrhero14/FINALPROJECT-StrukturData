@@ -86,6 +86,8 @@ def cari(word):
         indexData = linearConllisionsSearch(word)
         if (indexData == None):
             print("Data Tidak ditemukan :[")
+            return 1
+
         elif (indexData != None):
             print("|::::: Kata ditemukan :::::|")
             print("Kata: ", df.loc[indexData][0])
@@ -101,7 +103,7 @@ def cari(word):
 
     else: # Apabila data tidak ditemukan
         print(word, "Tidak ditemukan :[")
-        return "nyaa"
+        return 1
 
 @eel.expose
 def edit():

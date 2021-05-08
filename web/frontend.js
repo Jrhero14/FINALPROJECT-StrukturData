@@ -53,6 +53,10 @@ async function edit(){
   var word = document.getElementById("word")
   var definition = document.getElementById("definition")
   var deskripsi = document.getElementById("deskripsi").value
+
+  var definitionAfter = document.getElementById("definitionAfter")
+  var definition2After = document.getElementById("definition2After")
+
   if(kata && pilihan && deskripsi){
     if(pilihan == "definisi"){
       var pilih = 1
@@ -64,19 +68,30 @@ async function edit(){
     if(hasil == 1){
       word.innerHTML = "Hasil tidak ditemukan"
       definition.innerHTML = "Hasil tidak ditemukan"
+      contoh.innerHTML = " "
+      definition2.innerHTML = " "
+      after.innerHTML = " "
+      wordAfter.innerHTML = " "
+      definitionAfter.innerHTML = " "
+      contohAfter.innerHTML = " "
+      definition2After.innerHTML = " "
     }
     else{
+      var hasilSebelum = await eel.cari(kata)()
+
       await eel.edit(kata, pilih, deskripsi)()
-      var hasil = await eel.cari(kata)()
-      kata = hasil[0]
-      if(pilihan == "definisi"){
-        word.innerHTML = hasil[0]
-        definition.innerHTML = hasil[1]
-      }
-      else if(pilihan == "contoh"){
-        word.innerHTML = hasil[0]
-        definition.innerHTML = hasil[2]
-      }
+      var hasilSesudah = await eel.cari(kata)()
+
+      word.innerHTML = hasilSebelum[0]
+      definition.innerHTML = hasilSebelum[1]
+      contoh.innerHTML = "Contoh"
+      definition2.innerHTML = hasilSebelum[2]
+      after.innerHTML = "Setelah Perubahan"
+      wordAfter.innerHTML = hasilSebelum[0]
+      definitionAfter.innerHTML = hasilSesudah[1]
+      contohAfter.innerHTML = "Contoh"
+      definition2After.innerHTML = hasilSesudah[2]
+
     }
     output.style.visibility = 'hidden'
     loading.style.visibility = 'visible'
@@ -103,17 +118,25 @@ async function preview(){
     if(hasil == 1){
       word.innerHTML = "Hasil tidak ditemukan"
       definition.innerHTML = "Hasil tidak ditemukan"
+      contoh.innerHTML = " "
+      definition2.innerHTML = " "
+      after.innerHTML = " "
+      wordAfter.innerHTML = " "
+      definitionAfter.innerHTML = " "
+      contohAfter.innerHTML = " "
+      definition2After.innerHTML = " "
     }
     else{
       kata = hasil[0]
-      if(pilihan == "definisi"){
-        word.innerHTML = hasil[0]
-        definition.innerHTML = hasil[1]
-      }
-      else if(pilihan == "contoh"){
-        word.innerHTML = hasil[0]
-        definition.innerHTML = hasil[2]
-      }
+      word.innerHTML = hasil[0]
+      definition.innerHTML = hasil[1]
+      definition2.innerHTML = hasil[2]
+      contoh.innerHTML = "Contoh"
+      after.innerHTML = " "
+      wordAfter.innerHTML = " "
+      definitionAfter.innerHTML = " "
+      contohAfter.innerHTML = " "
+      definition2After.innerHTML = " "
     }
     output.style.visibility = 'hidden'
     loading.style.visibility = 'visible'
@@ -141,11 +164,25 @@ async function hapus(){
     if(hasil == 1){
       word.innerHTML = "Hasil tidak ditemukan"
       definition.innerHTML = "Hasil tidak ditemukan"
+      contoh.innerHTML = " "
+      definition2.innerHTML = " "
+      after.innerHTML = " "
+      wordAfter.innerHTML = " "
+      definitionAfter.innerHTML = " "
+      contohAfter.innerHTML = " "
+      definition2After.innerHTML = " "
     }
     else{
       await eel.edit(kata, pilih, deskripsi)()
-      word.innerHTML = "Hasil Dihapus"
-      definition.innerHTML = "Hasil Dihapus"
+      word.innerHTML = "Berhasil Dihapus"
+      definition.innerHTML = "Berhasil Dihapus"
+      contoh.innerHTML = " "
+      definition2.innerHTML = " "
+      after.innerHTML = " "
+      wordAfter.innerHTML = " "
+      definitionAfter.innerHTML = " "
+      contohAfter.innerHTML = " "
+      definition2After.innerHTML = " "
     }
     output.style.visibility = 'hidden'
     loading.style.visibility = 'visible'

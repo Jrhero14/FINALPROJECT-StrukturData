@@ -142,7 +142,7 @@ async function hapus(){
       definition.innerHTML = "Hasil tidak ditemukan"
     }
     else{
-      await eel.cari(kata, pilih, deskripsi)()
+      await eel.edit(kata, pilih, deskripsi)()
       word.innerHTML = "Hasil Dihapus"
       definition.innerHTML = "Hasil Dihapus"
     }

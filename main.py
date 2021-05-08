@@ -5,7 +5,7 @@ df = pd.read_csv("database.csv")
 #FUNGSI-FUNGSI SISTEM BEGIN
 def hashFunction(word):
     temp = 0
-    for i, j in zip(word, range(len(word))):
+    for i, j in zip(word, range(1, len(word)+1)):
         temp += ord(i) * j
         temp = temp % 1000
     return temp

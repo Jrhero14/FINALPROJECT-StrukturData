@@ -60,12 +60,13 @@ async function edit(){
     else if(pilihan == "contoh"){
       var pilih = 2
     }
-    var hasil = await eel.edit(kata, pilih, deskripsi)()
+    var hasil = await eel.cari(kata)()
     if(hasil == 1){
       word.innerHTML = "Hasil tidak ditemukan"
       definition.innerHTML = "Hasil tidak ditemukan"
     }
     else{
+      await eel.edit(kata, pilih, deskripsi)()
       var hasil = await eel.cari(kata)()
       kata = hasil[0]
       if(pilihan == "definisi"){

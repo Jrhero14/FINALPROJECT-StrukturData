@@ -109,6 +109,10 @@ p {
   height: 100px;
 }
 
+#hapus{
+  margin-left: 120px;
+}
+
 ::-webkit-input-placeholder {
     color:white;
     opacity: 0.85;

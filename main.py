@@ -106,9 +106,7 @@ def cari(word):
         return 1
 
 @eel.expose
-def edit():
-    word = input("Cari kata yang akan diedit:")
-    pilih = None
+def edit(word, pilih, deskripsi):
     if (df.loc[hashFunction(word)][0] == word): # Apabila data ditemukan untuk diedit
         print("|::::: Kata ditemukan :::::|")
         print("Kata: ", df.loc[hashFunction(word)][0])
@@ -126,29 +124,19 @@ def edit():
         print("4. Hapus")
 
         while True:
-            pilih = input("Pilih:")
             word_replace = None
 
             if (int(pilih) == 1):
-                word_replace = input("Masukan Kata:") # Variabel input kata baru
-                new_index = realokasi(IndexKataLama=hashFunction(word), kata_baru=word_replace)
-                df.loc[new_index] = [word_replace, definisi_temp, contoh_pen_temp]
-                overwrite()
-                print("Kata berhasil diganti")
-                break
-            elif (int(pilih) == 2):
-                definisi_replace = input("Masukan Definisi :") # Variabel input definisi baru
-                df.loc[hashFunction(word)][1] = definisi_replace
+                df.loc[hashFunction(word)][1] = deskripsi
                 overwrite()
                 print("Definisi berhasil diganti")
                 break
-            elif (int(pilih) == 3):
-                contoh_replace = input("Masukan Contoh:") # Variabel input contoh baru
-                df.loc[hashFunction(word)][2] = contoh_replace
+            elif (int(pilih) == 2):
+                df.loc[hashFunction(word)][2] = deskripsi
                 overwrite()
                 print("Contoh berhasil diganti")
                 break
-            elif (int(pilih) == 4):
+            elif (int(pilih) == 3):
                 df.loc[hashFunction(word)] = [None, None, None]
                 overwrite()
                 print("Kata berhasil dihapus")
@@ -160,6 +148,7 @@ def edit():
         indexData = linearConllisionsSearch(word)
         if (indexData == None):
             print("Data tidak ditemukan")
+            return 1
         elif (indexData != None):
             print("|::::: Kata ditemukan :::::|")
             print("Kata: ", df.loc[indexData][0])
@@ -177,29 +166,21 @@ def edit():
             print("4. Hapus")
 
             while True:
-                pilih = input("Pilih:")
                 word_replace = None
 
                 if (int(pilih) == 1):
-                    word_replace = input("Masukan Kata:")  # Variabel input kata baru
-                    new_index = realokasi(IndexKataLama= indexData, kata_baru=word_replace)
-                    df.loc[new_index] = [word_replace, definisi_temp, contoh_pen_temp]
-                    overwrite()
-                    print("Kata berhasil diganti")
-                    break
-                elif (int(pilih) == 2):
-                    definisi_replace = input("Masukan Definisi :")  # Variabel input definisi baru
-                    df.loc[indexData][1] = definisi_replace
+                    definisi_replace = deskripsi
+                    df.loc[indexData][1] = deskripsi
                     overwrite()
                     print("Definisi berhasil diganti")
                     break
-                elif (int(pilih) == 3):
-                    contoh_replace = input("Masukan Contoh:")  # Variabel input contoh baru
-                    df.loc[indexData][2] = contoh_replace
+                elif (int(pilih) == 2):
+                    contoh_replace = deskripsi
+                    df.loc[indexData][2] = deskripsi
                     overwrite()
                     print("Contoh berhasil diganti")
                     break
-                elif (int(pilih) == 4):
+                elif (int(pilih) == 3):
                     df.loc[indexData] = [None, None, None]
                     overwrite()
                     print("Kata berhasil dihapus")
@@ -209,5 +190,6 @@ def edit():
 
     else: # Apabila data tidak ditemukan untuk diedit
         print(word, "Tidak ditemukan :[")
+        return 1
 
-eel.start('home.html', size=(1280,800))
+eel.start('home.html', size=(1280,720))

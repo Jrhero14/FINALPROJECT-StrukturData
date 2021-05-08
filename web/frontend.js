@@ -45,13 +45,38 @@ function add_words(){
   }, 2000)
 }
 
-function edit_words(){
+async function edit(){
   var kata = document.getElementById("kata").value
   var pilihan = document.getElementById("pilihan").value
+  var output = document.getElementById("output")
+  var loading = document.getElementById("loader")
+  var word = document.getElementById("word")
+  var definition = document.getElementById("definition")
   var deskripsi = document.getElementById("deskripsi").value
-  if(kata && pilihan != 0 && deskripsi){
-    var output = document.getElementById("output")
-    var loading = document.getElementById("loader")
+  if(kata && pilihan && deskripsi){
+    if(pilihan == "definisi"){
+      var pilih = 1
+    }
+    else if(pilihan == "contoh"){
+      var pilih = 2
+    }
+    var hasil = await eel.edit(kata, pilih, deskripsi)()
+    if(hasil == 1){
+      word.innerHTML = "Hasil tidak ditemukan"
+      definition.innerHTML = "Hasil tidak ditemukan"
+    }
+    else{
+      var hasil = await eel.cari(kata)()
+      kata = hasil[0]
+      if(pilihan == "definisi"){
+        word.innerHTML = hasil[0]
+        definition.innerHTML = hasil[1]
+      }
+      else if(pilihan == "contoh"){
+        word.innerHTML = hasil[0]
+        definition.innerHTML = hasil[2]
+      }
+    }
     output.style.visibility = 'hidden'
     loading.style.visibility = 'visible'
     output.style.opacity = 0
@@ -62,16 +87,33 @@ function edit_words(){
       output.style.opacity = 1
       loading.style.opacity = 0
   }, 3000)
-    console.log(data)
   }
 }
 
-function preview(){
+async function preview(){
   var kata = document.getElementById("kata").value
   var pilihan = document.getElementById("pilihan").value
-  if(kata && pilihan != 0){
-    var output = document.getElementById("output")
-    var loading = document.getElementById("loader")
+  var output = document.getElementById("output")
+  var loading = document.getElementById("loader")
+  var word = document.getElementById("word")
+  var definition = document.getElementById("definition")
+  if(kata && pilihan){
+    var hasil = await eel.cari(kata)()
+    if(hasil == 1){
+      word.innerHTML = "Hasil tidak ditemukan"
+      definition.innerHTML = "Hasil tidak ditemukan"
+    }
+    else{
+      kata = hasil[0]
+      if(pilihan == "definisi"){
+        word.innerHTML = hasil[0]
+        definition.innerHTML = hasil[1]
+      }
+      else if(pilihan == "contoh"){
+        word.innerHTML = hasil[0]
+        definition.innerHTML = hasil[2]
+      }
+    }
     output.style.visibility = 'hidden'
     loading.style.visibility = 'visible'
     output.style.opacity = 0
@@ -82,9 +124,41 @@ function preview(){
       output.style.opacity = 1
       loading.style.opacity = 0
   }, 3000)
-    console.log(data)
   }
 }
+
+async function hapus(){
+  var kata = document.getElementById("kata").value
+  var pilihan = document.getElementById("pilihan").value
+  var output = document.getElementById("output")
+  var loading = document.getElementById("loader")
+  var word = document.getElementById("word")
+  var definition = document.getElementById("definition")
+  var pilih = 3
+  if(kata){
+    var hasil = await eel.cari(kata)()
+    if(hasil == 1){
+      word.innerHTML = "Hasil tidak ditemukan"
+      definition.innerHTML = "Hasil tidak ditemukan"
+    }
+    else{
+      await eel.cari(kata, pilih, deskripsi)()
+      word.innerHTML = "Hasil Dihapus"
+      definition.innerHTML = "Hasil Dihapus"
+    }
+    output.style.visibility = 'hidden'
+    loading.style.visibility = 'visible'
+    output.style.opacity = 0
+    loading.style.opacity = 1
+    setTimeout(function(){
+      output.style.visibility = 'visible'
+      loading.style.visibility = 'hidden';
+      output.style.opacity = 1
+      loading.style.opacity = 0
+  }, 3000)
+  }
+}
+
 
 /*
 window.addEventListener('contextmenu', function (e) {

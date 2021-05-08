@@ -1,13 +1,11 @@
 import pandas as pd
-import eel
 
 df = pd.read_csv("database.csv")
-eel.init('web')
 
 #FUNGSI-FUNGSI SISTEM BEGIN
 def hashFunction(word):
     temp = 0
-    for i, j in zip(word, range(1,len(word)+1)):
+    for i, j in zip(word, range(len(word))):
         temp += ord(i) * j
         temp = temp % 1000
     return temp
@@ -34,6 +32,15 @@ def linearConllisionsSearch(kata):
         if (newIndex == hashFunction(kata)): # Data tidak ditemukan
             return None
 
+def realokasi(IndexKataLama, kata_baru):
+    df.loc[IndexKataLama] = [None, None, None]
+    if (df.isnull().loc[hashFunction(kata_baru)][0] == False):
+        new_Index = linearConllisionEmpty(kata_baru)
+        return new_Index
+    else:
+        new_Index = hashFunction(kata_baru)
+        return new_Index
+
 def overwrite():
     df.to_csv('database.csv', index=False)
 
@@ -42,8 +49,11 @@ def overwrite():
 
 
 # FUNGSI-FUNGSI OPERASI BEGIN
-@eel.expose
-def tambah(kata, definisi, contoh):
+
+def tambah():
+    kata = input("Masukan kata Gaul:") # Variabel input tambah kata
+    definisi = input("Definisi kata tersebut:") # Variabel input definisi kata
+    contoh = input("Contoh kata tersebut:") # Variabel input contoh kata
 
     if (df.isnull().loc[hashFunction(kata)][0] == False): # Apabila dalam database entry tersebut sudah ada yg menempati
         print("Terjadi Collision, Linear Collision sedang dilakukan...")
@@ -51,16 +61,15 @@ def tambah(kata, definisi, contoh):
         df.loc[newIndex] = [kata, definisi, contoh]
         overwrite()
         print("Linear Collision sukses dilakukan!!")
-        return 1
 
     else:  # Apabila dalam database entry tersebut kosong
         df.loc[hashFunction(kata)] = [kata, definisi, contoh]
         overwrite()
         print("Berhasil ditambahkan\n")
-        return 0
 
-@eel.expose
-def cari(word):
+
+def cari():
+    word = input("Cari kata:")
     if (df.loc[hashFunction(word)][0] == word): # Apabila data ditemukan
         print("|::::: Kata ditemukan :::::|")
         print("Kata: ", df.loc[hashFunction(word)][0])
@@ -77,8 +86,6 @@ def cari(word):
         indexData = linearConllisionsSearch(word)
         if (indexData == None):
             print("Data Tidak ditemukan :[")
-            return 1
-
         elif (indexData != None):
             print("|::::: Kata ditemukan :::::|")
             print("Kata: ", df.loc[indexData][0])
@@ -94,10 +101,11 @@ def cari(word):
 
     else: # Apabila data tidak ditemukan
         print(word, "Tidak ditemukan :[")
-        return 1
 
-@eel.expose
-def edit(word, pilih, deskripsi):
+
+def edit():
+    word = input("Cari kata yang akan diedit:")
+    pilih = None
     if (df.loc[hashFunction(word)][0] == word): # Apabila data ditemukan untuk diedit
         print("|::::: Kata ditemukan :::::|")
         print("Kata: ", df.loc[hashFunction(word)][0])
@@ -115,19 +123,29 @@ def edit(word, pilih, deskripsi):
         print("4. Hapus")
 
         while True:
+            pilih = input("Pilih:")
             word_replace = None
 
             if (int(pilih) == 1):
-                df.loc[hashFunction(word)][1] = deskripsi
+                word_replace = input("Masukan Kata:") # Variabel input kata baru
+                new_index = realokasi(IndexKataLama=hashFunction(word), kata_baru=word_replace)
+                df.loc[new_index] = [word_replace, definisi_temp, contoh_pen_temp]
+                overwrite()
+                print("Kata berhasil diganti")
+                break
+            elif (int(pilih) == 2):
+                definisi_replace = input("Masukan Definisi :") # Variabel input definisi baru
+                df.loc[hashFunction(word)][1] = definisi_replace
                 overwrite()
                 print("Definisi berhasil diganti")
                 break
-            elif (int(pilih) == 2):
-                df.loc[hashFunction(word)][2] = deskripsi
+            elif (int(pilih) == 3):
+                contoh_replace = input("Masukan Contoh:") # Variabel input contoh baru
+                df.loc[hashFunction(word)][2] = contoh_replace
                 overwrite()
                 print("Contoh berhasil diganti")
                 break
-            elif (int(pilih) == 3):
+            elif (int(pilih) == 4):
                 df.loc[hashFunction(word)] = [None, None, None]
                 overwrite()
                 print("Kata berhasil dihapus")
@@ -139,7 +157,6 @@ def edit(word, pilih, deskripsi):
         indexData = linearConllisionsSearch(word)
         if (indexData == None):
             print("Data tidak ditemukan")
-            return 1
         elif (indexData != None):
             print("|::::: Kata ditemukan :::::|")
             print("Kata: ", df.loc[indexData][0])
@@ -157,21 +174,29 @@ def edit(word, pilih, deskripsi):
             print("4. Hapus")
 
             while True:
+                pilih = input("Pilih:")
                 word_replace = None
 
                 if (int(pilih) == 1):
-                    definisi_replace = deskripsi
-                    df.loc[indexData][1] = deskripsi
+                    word_replace = input("Masukan Kata:")  # Variabel input kata baru
+                    new_index = realokasi(IndexKataLama= indexData, kata_baru=word_replace)
+                    df.loc[new_index] = [word_replace, definisi_temp, contoh_pen_temp]
+                    overwrite()
+                    print("Kata berhasil diganti")
+                    break
+                elif (int(pilih) == 2):
+                    definisi_replace = input("Masukan Definisi :")  # Variabel input definisi baru
+                    df.loc[indexData][1] = definisi_replace
                     overwrite()
                     print("Definisi berhasil diganti")
                     break
-                elif (int(pilih) == 2):
-                    contoh_replace = deskripsi
-                    df.loc[indexData][2] = deskripsi
+                elif (int(pilih) == 3):
+                    contoh_replace = input("Masukan Contoh:")  # Variabel input contoh baru
+                    df.loc[indexData][2] = contoh_replace
                     overwrite()
                     print("Contoh berhasil diganti")
                     break
-                elif (int(pilih) == 3):
+                elif (int(pilih) == 4):
                     df.loc[indexData] = [None, None, None]
                     overwrite()
                     print("Kata berhasil dihapus")
@@ -181,6 +206,25 @@ def edit(word, pilih, deskripsi):
 
     else: # Apabila data tidak ditemukan untuk diedit
         print(word, "Tidak ditemukan :[")
-        return 1
 
-eel.start('home.html', size=(1280,720))
+# FUNGSI-FUNGSI OPERASI END
+
+while True:
+    print("|::: KAMUS GAOLLL :::|")
+    print("1.Tambah\n2.Cari Kata\n3.Edit\n4.Keluar Program")
+    menu_Utama = int(input("Pilih:"))
+
+    if(menu_Utama == 1):
+        tambah()
+        print("\n")
+    elif(menu_Utama == 2):
+        cari()
+        print("\n")
+    elif(menu_Utama == 3):
+        edit()
+        print("\n")
+    elif(menu_Utama == 4):
+        exit()
+    else:
+        print("Tidak ada dalam menu, ulangi!!")
+    input("Enter untuk kembali ke menu...")

@@ -34,15 +34,6 @@ def linearConllisionsSearch(kata):
         if (newIndex == hashFunction(kata)): # Data tidak ditemukan
             return None
 
-def realokasi(IndexKataLama, kata_baru):
-    df.loc[IndexKataLama] = [None, None, None]
-    if (df.isnull().loc[hashFunction(kata_baru)][0] == False):
-        new_Index = linearConllisionEmpty(kata_baru)
-        return new_Index
-    else:
-        new_Index = hashFunction(kata_baru)
-        return new_Index
-
 def overwrite():
     df.to_csv('database.csv', index=False)
 

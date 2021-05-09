@@ -191,15 +191,11 @@ def edit(word, pilih, deskripsi):
         print(word, "Tidak ditemukan :[")
         return 1
 
-def history():
-    print("Pilih metode:")
-    print("1. Tebaru -> Terlama")
-    print("2. Terlama -> Terbaru")
-    pilih = int(input("Pilih:"))
-    if (pilih == 1):
-        lihat(0)
-    elif (pilih == 2):
-        lihat(1)
+def history(method = None):
+    if (method == 1):
+        lihat(0)  # Tebaru -> Terlama
+    else:
+        lihat(1) # Terlama -> Terbaru
 
 # DOUBLE LINKED LIST CONFIGURATION
 class simpul:

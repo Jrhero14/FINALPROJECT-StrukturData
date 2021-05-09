@@ -60,22 +60,26 @@ def tambah(kata, definisi, contoh):
         return 0
 
 @eel.expose
-def cari(word):
+def cari(word, His = None):
     if (df.loc[hashFunction(word)][0] == word): # Apabila data ditemukan
         print("|::::: Kata ditemukan :::::|")
         print("Kata: ", df.loc[hashFunction(word)][0])
         print("Definisi: ", df.loc[hashFunction(word)][1])
         print("Contoh penggunaan: ", df.loc[hashFunction(word)][2])
-
+        
         word = df.loc[hashFunction(word)][0]
         definisi = df.loc[hashFunction(word)][1]
         contoh_pen = df.loc[hashFunction(word)][2]
-
+        
+        if (His == 1):
+            tambahHead(word, definisi, contoh_pen)
         return word, definisi, contoh_pen # return kata, definisi, dan contoh penggunaan
 
     elif ((df.loc[hashFunction(word)][0] != word) and (df.loc[hashFunction(word)][0] != True)): # Apabila serach terjadi collision
         indexData = linearConllisionsSearch(word)
         if (indexData == None):
+            if (His == 1):
+                tambahHead(word, None, None)
             print("Data Tidak ditemukan :[")
             return 1
 
@@ -89,10 +93,14 @@ def cari(word):
             definisi = df.loc[indexData][1]
             contoh_pen = df.loc[indexData][2]
 
+            if (His == 1):
+                tambahHead(word, definisi, contoh_pen)
             return word, definisi, contoh_pen  # return kata, definisi, dan contoh penggunaan
 
 
     else: # Apabila data tidak ditemukan
+        if (His == 1):
+            tambahHead(word, None, None)
         print(word, "Tidak ditemukan :[")
         return 1
 
@@ -182,5 +190,58 @@ def edit(word, pilih, deskripsi):
     else: # Apabila data tidak ditemukan untuk diedit
         print(word, "Tidak ditemukan :[")
         return 1
+
+def history():
+    print("Pilih metode:")
+    print("1. Tebaru -> Terlama")
+    print("2. Terlama -> Terbaru")
+    pilih = int(input("Pilih:"))
+    if (pilih == 1):
+        lihat(0)
+    elif (pilih == 2):
+        lihat(1)
+
+# DOUBLE LINKED LIST CONFIGURATION
+class simpul:
+    def __init__(self, kata, definisi, contoh):
+        self.kata = kata
+        self.definisi = definisi
+        self.contoh = contoh
+        self.next = None
+        self.prev = None
+
+class DlinkedList:
+    def __init__(self):
+        self.headVal = None
+        self.tailVal = None
+
+def tambahHead(kata, definisi, contoh):
+    global list1
+    if (list1.headVal is None):
+        global new
+        new = simpul(kata, definisi, contoh)
+        list1.headVal = new
+        list1.tailVal = new
+    else:
+        global new2
+        new2 = simpul(kata, definisi, contoh)
+        new2.next = list1.headVal
+        list1.headVal.prev = new2
+        list1.headVal = new2
+
+def lihat(reverse):
+    global list1
+    if(reverse == 1):
+        temp = list1.tailVal
+        while (temp != None):
+            print("Kata: ",temp.kata)
+            temp = temp.prev
+    else:
+        temp = list1.headVal
+        while (temp != None):
+            print("Kata: ",temp.kata)
+            temp = temp.next
+
+list1 = DlinkedList() # Inisialisasi double linked list sebagai list1
 
 eel.start('home.html', size=(1280,720))

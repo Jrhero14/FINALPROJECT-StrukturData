@@ -10,7 +10,7 @@ async function search_words(){
     var kata = document.getElementById("word")
     var definisi = document.getElementById("definition")
     var contoh = document.getElementById("example")
-    let hasil = await eel.cari(word)()
+    let hasil = await eel.cari(word,1)()
     console.log(kata)
     if(hasil == 1){
       kata.innerHTML = "Hasil tidak ditemukan"

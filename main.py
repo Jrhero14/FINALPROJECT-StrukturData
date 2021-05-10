@@ -225,18 +225,23 @@ def tambahHead(kata, definisi, contoh):
         list1.headVal.prev = new2
         list1.headVal = new2
 
+@eel.expose
 def lihat(reverse):
     global list1
+    templist = []
     if(reverse == 1):
         temp = list1.tailVal
         while (temp != None):
             print("Kata: ",temp.kata)
             temp = temp.prev
+            templist.append(temp.kata)
     else:
         temp = list1.headVal
         while (temp != None):
             print("Kata: ",temp.kata)
             temp = temp.next
+            templist.append(temp.kata)
+    return temp
 
 list1 = DlinkedList() # Inisialisasi double linked list sebagai list1
 

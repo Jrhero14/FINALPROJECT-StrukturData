@@ -32,13 +32,14 @@ async function search_words(){
   }
 }
 
-function add_words(){
+async function add(){
   var kata = document.getElementById("kata").value
   var definisi = document.getElementById("definisi").value
   var contoh = document.getElementById("contoh").value
   var overlay = document.getElementById("overlay")
   overlay.style.visibility = 'visible';
   overlay.style.opacity = 1
+  eel.tambah(kata, definisi, contoh)()
   setTimeout(function(){
     overlay.style.opacity = 0
     overlay.style.visibility = 'hidden';
@@ -102,7 +103,7 @@ async function edit(){
       loading.style.visibility = 'hidden';
       output.style.opacity = 1
       loading.style.opacity = 0
-  }, 3000)
+  }, 2000)
   }
 }
 
@@ -147,13 +148,12 @@ async function preview(){
       loading.style.visibility = 'hidden';
       output.style.opacity = 1
       loading.style.opacity = 0
-  }, 3000)
+  }, 2000)
   }
 }
 
 async function hapus(){
   var kata = document.getElementById("kata").value
-  var pilihan = document.getElementById("pilihan").value
   var output = document.getElementById("output")
   var loading = document.getElementById("loader")
   var word = document.getElementById("word")
@@ -193,8 +193,19 @@ async function hapus(){
       loading.style.visibility = 'hidden';
       output.style.opacity = 1
       loading.style.opacity = 0
-  }, 3000)
+  }, 2000)
   }
+}
+
+async function history(){
+  var history = await eel.list1.lihat()()
+  var tab = document.getElementById("history-js")
+  var innerhistory
+  for(i in history){
+    var tag = "<p " + "onclick(search_words(" + i + ")>" + i + "</p>"
+    innerhistory.append(tag)
+  }
+  tab.innerHTML = innerhistory
 }
 
 

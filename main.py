@@ -190,7 +190,7 @@ class DlinkedList:
         self.tailVal = None
 
 def tambahHead(kata, definisi, contoh):
-    global list1
+    global list1, countData
     if (list1.headVal is None):
         global new
         new = simpul(kata, definisi, contoh)
@@ -202,6 +202,8 @@ def tambahHead(kata, definisi, contoh):
         new2.next = list1.headVal
         list1.headVal.prev = new2
         list1.headVal = new2
+    countData += 1
+    hapus()
 
 @eel.expose
 def lihat(reverse):
@@ -211,15 +213,26 @@ def lihat(reverse):
         temp = list1.tailVal
         while (temp != None):
             print("Kata: ",temp.kata)
-            temp = temp.prev
             templist.append(temp.kata)
+            temp = temp.prev
     else:
         temp = list1.headVal
         while (temp != None):
             print("Kata: ",temp.kata)
-            temp = temp.next
             templist.append(temp.kata)
+            temp = temp.next
+
     return temp
+
+countData = 0
+def hapus():
+    global list1, countData
+    temp = list1.tailVal
+    if (countData > 10):
+        list1.tailVal = list1.tailVal.prev
+        list1.tailVal.next = None
+        del (temp)
+
 
 list1 = DlinkedList() # Inisialisasi double linked list sebagai list1
 

@@ -44,8 +44,9 @@ def overwrite():
 # FUNGSI-FUNGSI OPERASI BEGIN
 @eel.expose
 def tambah(kata, definisi, contoh):
+    indeks = hashFunction(kata)
 
-    if (df.isnull().loc[hashFunction(kata)][0] == False): # Apabila dalam database entry tersebut sudah ada yg menempati
+    if (df.isnull().loc[indeks][0] == False): # Apabila dalam database entry tersebut sudah ada yg menempati
         print("Terjadi Collision, Linear Collision sedang dilakukan...")
         newIndex = linearConllisionEmpty(kata)
         df.loc[newIndex] = [kata, definisi, contoh]
@@ -54,28 +55,30 @@ def tambah(kata, definisi, contoh):
         return 1
 
     else:  # Apabila dalam database entry tersebut kosong
-        df.loc[hashFunction(kata)] = [kata, definisi, contoh]
+        df.loc[indeks] = [kata, definisi, contoh]
         overwrite()
         print("Berhasil ditambahkan\n")
         return 0
 
 @eel.expose
 def cari(word, His = None):
-    if (df.loc[hashFunction(word)][0] == word): # Apabila data ditemukan
+    indeks = hashFunction(word)
+
+    if (df.loc[indeks][0] == word): # Apabila data ditemukan
         print("|::::: Kata ditemukan :::::|")
-        print("Kata: ", df.loc[hashFunction(word)][0])
-        print("Definisi: ", df.loc[hashFunction(word)][1])
-        print("Contoh penggunaan: ", df.loc[hashFunction(word)][2])
+        print("Kata: ", df.loc[indeks][0])
+        print("Definisi: ", df.loc[indeks][1])
+        print("Contoh penggunaan: ", df.loc[indeks][2])
         
-        word = df.loc[hashFunction(word)][0]
-        definisi = df.loc[hashFunction(word)][1]
-        contoh_pen = df.loc[hashFunction(word)][2]
+        word = df.loc[indeks][0]
+        definisi = df.loc[indeks][1]
+        contoh_pen = df.loc[indeks][2]
         
         if (His == 1):
             tambahHead(word, definisi, contoh_pen)
         return word, definisi, contoh_pen # return kata, definisi, dan contoh penggunaan
 
-    elif ((df.loc[hashFunction(word)][0] != word) and (df.loc[hashFunction(word)][0] != True)): # Apabila serach terjadi collision
+    elif ((df.loc[indeks][0] != word) and (df.loc[indeks][0] != True)): # Apabila serach terjadi collision
         indexData = linearConllisionsSearch(word)
         if (indexData == None):
             if (His == 1):
@@ -106,24 +109,15 @@ def cari(word, His = None):
 
 @eel.expose
 def edit(word, pilih, deskripsi):
-    if (df.loc[hashFunction(word)][0] == word): # Apabila data ditemukan untuk diedit
+    indeks = hashFunction(word)
+
+    if (df.loc[indeks][0] == word): # Apabila data ditemukan untuk diedit
         print("|::::: Kata ditemukan :::::|")
-        print("Kata: ", df.loc[hashFunction(word)][0])
-        print("Definisi: ", df.loc[hashFunction(word)][1])
-        print("Contoh penggunaan: ", df.loc[hashFunction(word)][2])
-
-        word_temp = df.loc[hashFunction(word)][0] # variabel kata yang ketemu
-        definisi_temp = df.loc[hashFunction(word)][1] # variabel definisi dari kata yang ketemu
-        contoh_pen_temp = df.loc[hashFunction(word)][2] # variabel contoh dari kata yang ketemu
-
-        print("MENU EDIT:")
-        print("1. Kata")
-        print("2. Definisi")
-        print("3, Contoh")
-        print("4. Hapus")
+        print("Kata: ", df.loc[indeks][0])
+        print("Definisi: ", df.loc[indeks][1])
+        print("Contoh penggunaan: ", df.loc[indeks][2])
 
         while True:
-            word_replace = None
 
             if (int(pilih) == 1):
                 df.loc[hashFunction(word)][1] = deskripsi
@@ -131,20 +125,19 @@ def edit(word, pilih, deskripsi):
                 print("Definisi berhasil diganti")
                 break
             elif (int(pilih) == 2):
-                df.loc[hashFunction(word)][2] = deskripsi
+                df.loc[indeks][2] = deskripsi
                 overwrite()
                 print("Contoh berhasil diganti")
                 break
             elif (int(pilih) == 3):
-                df.loc[hashFunction(word)] = [None, None, None]
+                df.loc[indeks] = [None, None, None]
                 overwrite()
                 print("Kata berhasil dihapus")
                 break
-            else:
-                print("Tidak ada dalam menu")
 
-    elif ((df.loc[hashFunction(word)][0] != word) and (df.loc[hashFunction(word)][0] != True)):
+    elif ((df.loc[indeks][0] != word) and (df.loc[indeks][0] != True)):
         indexData = linearConllisionsSearch(word)
+
         if (indexData == None):
             print("Data tidak ditemukan")
             return 1
@@ -154,27 +147,14 @@ def edit(word, pilih, deskripsi):
             print("Definisi: ", df.loc[indexData][1])
             print("Contoh penggunaan: ", df.loc[indexData][2])
 
-            word_temp = df.loc[indexData][0]  # variabel kata yang ketemu
-            definisi_temp = df.loc[indexData][1]  # variabel definisi dari kata yang ketemu
-            contoh_pen_temp = df.loc[indexData][2]  # variabel contoh dari kata yang ketemu
-
-            print("MENU EDIT:")
-            print("1. Kata")
-            print("2. Definisi")
-            print("3, Contoh")
-            print("4. Hapus")
-
             while True:
-                word_replace = None
 
                 if (int(pilih) == 1):
-                    definisi_replace = deskripsi
                     df.loc[indexData][1] = deskripsi
                     overwrite()
                     print("Definisi berhasil diganti")
                     break
                 elif (int(pilih) == 2):
-                    contoh_replace = deskripsi
                     df.loc[indexData][2] = deskripsi
                     overwrite()
                     print("Contoh berhasil diganti")
@@ -184,8 +164,6 @@ def edit(word, pilih, deskripsi):
                     overwrite()
                     print("Kata berhasil dihapus")
                     break
-                else:
-                    print("Tidak ada dalam menu")
 
     else: # Apabila data tidak ditemukan untuk diedit
         print(word, "Tidak ditemukan :[")

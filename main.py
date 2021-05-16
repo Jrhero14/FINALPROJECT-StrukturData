@@ -78,7 +78,7 @@ def cari(word, His = None):
             tambahHead(word, definisi, contoh_pen)
         return word, definisi, contoh_pen # return kata, definisi, dan contoh penggunaan
 
-    elif ((df.loc[indeks][0] != word) and (df.loc[indeks][0] != True)): # Apabila serach terjadi collision
+    elif ((df.loc[indeks][0] != word) and (df.isnull().loc[indeks][0] != True)): # Apabila serach terjadi collision
         indexData = linearConllisionsSearch(word)
         if (indexData == None):
             if (His == 1):
@@ -135,7 +135,7 @@ def edit(word, pilih, deskripsi):
                 print("Kata berhasil dihapus")
                 break
 
-    elif ((df.loc[indeks][0] != word) and (df.loc[indeks][0] != True)):
+    elif ((df.loc[indeks][0] != word) and (df.isnull().loc[indeks][0] != True)):
         indexData = linearConllisionsSearch(word)
 
         if (indexData == None):

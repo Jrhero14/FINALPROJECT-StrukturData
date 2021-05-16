@@ -197,15 +197,28 @@ async function hapus(){
   }
 }
 
-async function history(){
-  var history = await eel.list1.lihat()()
+async function history(mode){
+  var history = await eel.lihat(mode)()
   var tab = document.getElementById("history-js")
-  var innerhistory
+  var innerhistory = ""
+  console.log(history)
   for(i in history){
-    var tag = "<p " + "onclick(search_words(" + i + ")>" + i + "</p>"
-    innerhistory.append(tag)
+    var tag = "<button " + "id=\""+ i + "\"" + "onclick=\"search_history(" + i + ")\">" + history[i] + "</button>"
+    innerhistory = innerhistory + tag
   }
   tab.innerHTML = innerhistory
+}
+
+async function search_history(choice){
+  word = document.getElementById(choice).innerHTML
+  var kata = document.getElementById("word")
+  var definisi = document.getElementById("definition")
+  var contoh = document.getElementById("example")
+  let hasil = await eel.cari(word, 1)()
+  kata = hasil[0]
+  word.innerHTML = hasil[0]
+  definition.innerHTML = hasil[1]
+  definition2.innerHTML = hasil[2]
 }
 
 

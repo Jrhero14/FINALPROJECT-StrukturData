@@ -12,7 +12,7 @@
     <script src="script/frontend.js"></script>
     <script type="text/javascript" src="eel.js"></script>
 </head>
-<body onload="history()">
+<body onload="history(1)">
     <div class="all-container">
         <div class="menu-container">
             <p class="beside">KAMUSGAUL</p>
@@ -30,9 +30,9 @@
             <div class="history-container beside">
                 <h3>Riwayat Pencarian</h3>
                 <div id="history-js">
-                <p>Newest</p>
-                <p>Oldest</p>
                 </div>
+                <button type="button" name="button" onclick="history(1)">Newer First</button>
+                <button type="button" name="button" onclick="history(2)">Older First</button>
             </div>
             <div class="display-history-container beside">
                 <h3 id="word">Boke</h3>

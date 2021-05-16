@@ -3,6 +3,7 @@
 
 .history-container{
     margin-right: 50px;
+    width: 250px;
 }
 .content-container{
     margin-top: 30px;
@@ -19,7 +20,7 @@ h3{
     font-family: Montserrat;
     font-weight: 600;
     color: white;
-    font-size: 18px;
+    font-size: 20px;
 }
 
 p{
@@ -28,4 +29,43 @@ p{
     color: white;
     font-size: 15px;
 
+}
+
+.history-container h2{
+    font-family: Montserrat;
+    font-weight: 400;
+    color: white;
+    font-size: 15px;
+}
+
+.display-history-container{
+    vertical-align: top;
+}
+
+.history-container button{
+  align-items: center;
+  margin-top: 15px;
+  text-align: center;
+  font-family: Montserrat;
+  color: white;
+  font-size: 15px;
+  font-weight: 900;
+  backdrop-filter: blur(5px);
+  background-color: rgba(255, 255, 255, 0);
+  border-color: rgba(255, 255, 255, 0);
+  cursor: pointer;
+}
+
+.history-container button:hover{
+  color: rgba(230, 230, 230, 1);
+}
+
+#history-js{
+    font-weight: 400;
+    display: block;
+}
+
+#history-js button{
+    margin-top: 30px;
+    width: 200px
 }

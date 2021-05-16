@@ -222,7 +222,7 @@ def lihat(reverse):
             templist.append(temp.kata)
             temp = temp.next
 
-    return temp
+    return templist
 
 countData = 0
 def hapus():

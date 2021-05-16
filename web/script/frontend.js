@@ -27,7 +27,7 @@ async function search_words(){
       loading.style.visibility = 'hidden';
       output.style.opacity = 1
       loading.style.opacity = 0
-  }, 2000)
+  }, 1000)
     console.log(hasil)
   }
 }
@@ -43,7 +43,7 @@ async function add(){
   setTimeout(function(){
     overlay.style.opacity = 0
     overlay.style.visibility = 'hidden';
-  }, 2000)
+  }, 1000)
 }
 
 async function edit(){
@@ -103,7 +103,7 @@ async function edit(){
       loading.style.visibility = 'hidden';
       output.style.opacity = 1
       loading.style.opacity = 0
-  }, 2000)
+  }, 1000)
   }
 }
 
@@ -148,7 +148,7 @@ async function preview(){
       loading.style.visibility = 'hidden';
       output.style.opacity = 1
       loading.style.opacity = 0
-  }, 2000)
+  }, 1000)
   }
 }
 
@@ -193,7 +193,7 @@ async function hapus(){
       loading.style.visibility = 'hidden';
       output.style.opacity = 1
       loading.style.opacity = 0
-  }, 2000)
+  }, 1000)
   }
 }
 
@@ -212,11 +212,10 @@ async function history(mode){
 async function search_history(choice){
   word = document.getElementById(choice).innerHTML
   var kata = document.getElementById("word")
-  var definisi = document.getElementById("definition")
-  var contoh = document.getElementById("example")
-  let hasil = await eel.cari(word, 1)()
-  kata = hasil[0]
-  word.innerHTML = hasil[0]
+  var definition = document.getElementById("definition")
+  var definition2 = document.getElementById("definition2")
+  let hasil = await eel.cari(word, 0)()
+  kata.innerHTML = hasil[0]
   definition.innerHTML = hasil[1]
   definition2.innerHTML = hasil[2]
 }

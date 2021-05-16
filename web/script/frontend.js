@@ -220,10 +220,7 @@ async function search_history(choice){
   definition2.innerHTML = hasil[2]
 }
 
-
-/*
 window.addEventListener('contextmenu', function (e) {
   e.preventDefault();
 }, false);
 
-*/

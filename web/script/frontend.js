@@ -211,14 +211,34 @@ async function history(mode){
 
 async function search_history(choice){
   word = document.getElementById(choice).innerHTML
+  var output = document.getElementById("output")
+  var loading = document.getElementById("loader")
+  output.style.visibility = 'hidden'
+  loading.style.visibility = 'visible'
+  output.style.opacity = 0
+  loading.style.opacity = 1
   var kata = document.getElementById("word")
   var definition = document.getElementById("definition")
   var definition2 = document.getElementById("definition2")
   let hasil = await eel.cari(word, 0)()
+  if(hasil == 1){
+    kata.innerHTML = "Hasil Tidak Ditemukan"
+    definition.innerHTML = "Hasil Tidak Ditemukan"
+    definition2.innerHTML = "Hasil Tidak Ditemukan"
+  }
+  else{
   kata.innerHTML = hasil[0]
   definition.innerHTML = hasil[1]
   definition2.innerHTML = hasil[2]
+  }
+  setTimeout(function(){
+    output.style.visibility = 'visible'
+    loading.style.visibility = 'hidden';
+    output.style.opacity = 1
+    loading.style.opacity = 0
+  }, 1000)
 }
+
 
 window.addEventListener('contextmenu', function (e) {
   e.preventDefault();

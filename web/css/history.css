@@ -42,6 +42,10 @@ p{
 .display-history-container{
     vertical-align: top;
     width: 300px;
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.5s linear;
 }
 
 .history-container button{
@@ -70,4 +74,13 @@ p{
 #history-js button{
     margin-top: 30px;
     width: 200px
+}
+
+.loader-container img{
+    width: 300px;
+    margin-left: 280px;
+    margin-top: -100px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.5s linear;
 }

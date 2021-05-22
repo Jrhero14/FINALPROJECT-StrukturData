@@ -39,7 +39,11 @@ async function add(){
   var overlay = document.getElementById("overlay")
   overlay.style.visibility = 'visible';
   overlay.style.opacity = 1
-  eel.tambah(kata, definisi, contoh)()
+  var confirm = await eel.tambah(kata, definisi, contoh)()
+  if(confirm == "Ada"){
+    var inner = document.getElementById("inside-text")
+    inner.innerHTML = "Data Sudah <br> Ada"
+  }
   setTimeout(function(){
     overlay.style.opacity = 0
     overlay.style.visibility = 'hidden';

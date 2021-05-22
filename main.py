@@ -47,6 +47,9 @@ def tambah(kata, definisi, contoh):
     indeks = hashFunction(kata)
 
     if (df.isnull().loc[indeks][0] == False): # Apabila dalam database entry tersebut sudah ada yg menempati
+        if (df.loc[indeks][0] == kata):
+            return "Ada"
+
         print("Terjadi Collision, Linear Collision sedang dilakukan...")
         newIndex = linearConllisionEmpty(kata)
         df.loc[newIndex] = [kata, definisi, contoh]
@@ -135,7 +138,7 @@ def edit(word, pilih, deskripsi):
                 print("Kata berhasil dihapus")
                 break
 
-    elif ((df.loc[indeks][0] != word) and (df.isnull().loc[indeks][0] != True)):
+    elif ((df.loc[indeks][0] != word) and (df.isnull().loc[indeks][0] != True)): # Apabila data ditemukan untuk diedit ketika dicari mengalami collision
         indexData = linearConllisionsSearch(word)
 
         if (indexData == None):

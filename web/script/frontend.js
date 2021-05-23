@@ -47,7 +47,7 @@ async function add(){
   setTimeout(function(){
     overlay.style.opacity = 0
     overlay.style.visibility = 'hidden';
-  }, 1000)
+  }, 2000)
 }
 
 async function edit(){

@@ -15,7 +15,7 @@ def hashFunction(word):
 def linearConllisionEmpty(kata):
     newIndex = hashFunction(kata)
     while True:
-        if (newIndex == 999):
+        if (newIndex == 1000):
             newIndex = 0
         if (df.isnull().loc[newIndex][0] == False):
             newIndex += 1
@@ -25,7 +25,7 @@ def linearConllisionEmpty(kata):
 def linearConllisionsSearch(kata):
     newIndex = hashFunction(kata)
     while True:
-        if (newIndex == 999):
+        if (newIndex == 1000):
             newIndex = 0
         elif (df.loc[newIndex][0] != kata):
             newIndex += 1

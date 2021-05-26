@@ -15,17 +15,19 @@ def hashFunction(word):
 def linearConllisionEmpty(kata):
     newIndex = hashFunction(kata)
     while True:
-        if (newIndex == 1000):
+        if (newIndex == 999):
             newIndex = 0
         if (df.isnull().loc[newIndex][0] == False):
             newIndex += 1
+        if(newIndex == hashFunction(kata)):
+            return "penuh"
         elif (df.isnull().loc[newIndex][0] == True):
             return newIndex
 
 def linearConllisionsSearch(kata):
     newIndex = hashFunction(kata)
     while True:
-        if (newIndex == 1000):
+        if (newIndex == 999):
             newIndex = 0
         elif (df.loc[newIndex][0] != kata):
             newIndex += 1
@@ -52,6 +54,9 @@ def tambah(kata, definisi, contoh):
 
         print("Terjadi Collision, Linear Collision sedang dilakukan...")
         newIndex = linearConllisionEmpty(kata)
+        if (newIndex == "penuh"):
+            return "penuh"
+        
         df.loc[newIndex] = [kata, definisi, contoh]
         overwrite()
         print("Linear Collision sukses dilakukan!!")
@@ -81,7 +86,7 @@ def cari(word, His = None):
             tambahHead(word, definisi, contoh_pen)
         return word, definisi, contoh_pen # return kata, definisi, dan contoh penggunaan
 
-    elif ((df.loc[indeks][0] != word) and (df.isnull().loc[indeks][0] != True)): # Apabila serach terjadi collision
+    elif ((df.loc[indeks][0] != word) and (df.isnull().loc[indeks][0] != True)): # Apabila search terjadi collision
         indexData = linearConllisionsSearch(word)
         if (indexData == None):
             if (His == 1):
